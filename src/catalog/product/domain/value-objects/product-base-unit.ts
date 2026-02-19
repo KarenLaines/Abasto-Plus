@@ -7,11 +7,7 @@ export class ProductBaseUnit extends EnumValueObject {
     'KG',
     'GRAM',
     'LITER',
-    'ML',
-    'METER',
-    'CM',
-    'BOX',
-    'PACK'
+    'ML'
   ];
 
   constructor(value: string) {

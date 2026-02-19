@@ -2,7 +2,7 @@ import { StringValueObject } from "../../../../sharecl/domain/value-objects/stri
 
 export class ProductName extends StringValueObject {
 
-  private static readonly MIN_LENGTH = 3;
+  private static readonly MIN_LENGTH = 10;
   private static readonly MAX_LENGTH = 100;
 
   constructor(value: string) {
