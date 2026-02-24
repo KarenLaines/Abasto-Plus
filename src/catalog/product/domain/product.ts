@@ -1,7 +1,7 @@
-import { ProductId } from '../value-objects/product-id';
-import { ProductName } from '../value-objects/product-name';
-import { ProductBaseUnit } from '../value-objects/product-base-unit';
-import { ProductPresentations } from './product-presentation';
+import { ProductId } from './value-objects/product-id';
+import { ProductName } from './value-objects/product-name';
+import { ProductBaseUnit } from './value-objects/product-base-unit';
+import { ProductPresentations } from './entities/product-presentation';
 
 export class Product {
 
