@@ -1,28 +1,35 @@
 import { MongoProductRepository } from './catalog/product/infrastructure/mongo-product-repository';
-import { Product } from './catalog/product/domain/product';
+import { SaveProduct } from './catalog/product/application/use-cases/save-product';
 
 async function main() {
 
   const repository = new MongoProductRepository();
 
-  const product = Product.build(
-    '550e8400-e29b-41d4-a716-446655440000',
-    'Agua Salvavidas',
-    'L',
-    [
+  const saveProduct = new SaveProduct(repository);
+
+  await saveProduct.execute({
+    id: '150e8400-e29b-41d4-a716-446655440000',
+    name: 'Fideos Ina Guatemala',
+    unitOfMeasure: 'UNIT',
+    presentations: [
       {
-        id: '111e8400-e29b-41d4-a716-446655440000',
-        name: 'Botella 1L',
-        type: 'BOTTLE',
-        netQuantity: 1,
-        unitOfMeasure: 'LT'
+        id: '151e7852-e35b-14d9-a674-558877660000',
+        name: 'Fideos de Spaguetti',
+        type: 'BAG',
+        netQuantity: 500,
+        unitOfMeasure: 'G'
+      },
+      {
+        id: '161e7852-e35b-14d9-a674-558877660000',
+        name: 'Caja de fideos de caracol',
+        type: 'BOX',
+        netQuantity: 500,
+        unitOfMeasure: 'LB'
       }
     ]
-  );
+  });
 
-  await repository.save(product);
-
-  console.log('Producto guardado correctamente 🚀');
+  console.log('Producto guardado correctamente');
 }
 
 main().catch(console.error);
