@@ -1,7 +1,7 @@
 
 
 import { Product } from "../../domain/product";
-import { ProductRepository } from "../product-repository";
+import { ProductRepository } from "../../domain/product-repository";
 
 export class SaveProduct {
 

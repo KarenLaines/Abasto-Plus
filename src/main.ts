@@ -1,9 +1,15 @@
 import { MongoProductRepository } from './catalog/product/infrastructure/mongo-product-repository';
 import { SaveProduct } from './catalog/product/application/use-cases/save-product';
+import { MongoConnection } from './catalog/product/infrastructure/mongo-connection';
 
 async function main() {
 
-  const repository = new MongoProductRepository();
+  const mongoConnection = new MongoConnection(
+    'mongodb://localhost:27017',
+    'practicaI'
+  );
+  // const repository = new PostgresProductRepository(connection);
+  const repository = new MongoProductRepository(mongoConnection);
 
   const saveProduct = new SaveProduct(repository);
 

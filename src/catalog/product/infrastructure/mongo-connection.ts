@@ -2,16 +2,21 @@ import { MongoClient, Db } from 'mongodb';
 
 export class MongoConnection {
 
-  private static client: MongoClient;
-  private static db: Db;
+  private client?: MongoClient;
+  private db?: Db;
 
-  static async connect(): Promise<Db> {
-    if (!this.db) {
-      this.client = new MongoClient('mongodb://localhost:27017/');
+  constructor(
+    private uri: string,
+    private dbName: string
+  ) {}
+
+  async connect(): Promise<Db> {
+    if (!this.client) {
+      this.client = new MongoClient(this.uri);
       await this.client.connect();
-      this.db = this.client.db('practicaI');
+      this.db = this.client.db(this.dbName);
     }
 
-    return this.db;
+    return this.db!;
   }
 }
