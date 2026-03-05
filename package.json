@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "mongodb": "^7.1.0"
+    "axios": "^1.13.6",
+    "inversify": "^7.11.0",
+    "mongodb": "^7.1.0",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@types/mongodb": "^4.0.6",

@@ -1,11 +1,12 @@
-
-
+import { injectable, inject } from "inversify";
 import { Product } from "../../domain/product";
 import { ProductRepository } from "../../domain/product-repository";
 
+@injectable()
 export class SaveProduct {
 
     constructor(
+        @inject("ProductRepository")
         private repository: ProductRepository
     ) {}
 
@@ -13,13 +14,7 @@ export class SaveProduct {
         id: string;
         name: string;
         unitOfMeasure: string;
-        presentations: {
-        id: string;
-        name: string;
-        type: string;
-        netQuantity: number;
-        unitOfMeasure: string;
-        }[];
+        presentations: any[];
     }): Promise<void> {
 
         const product = Product.build(
@@ -31,4 +26,4 @@ export class SaveProduct {
 
         await this.repository.save(product);
     }
-    }
+}
