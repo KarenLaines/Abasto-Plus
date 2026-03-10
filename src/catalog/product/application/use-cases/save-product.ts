@@ -25,7 +25,7 @@ export class SaveProduct {
 
         const product = Product.build(
             data.id,
-            translatedName, // aquí usamos el nombre traducido
+            translatedName, //el nombre traducido
             data.unitOfMeasure,
             data.presentations
         );

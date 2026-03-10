@@ -2,13 +2,17 @@ import "reflect-metadata";
 import { container } from "./catalog/product/infrastructure/container";
 import { SaveProduct } from "./catalog/product/application/use-cases/save-product";
 
+import { v4 as uuid } from "uuid";
+
+
+
 async function main() {
 
   const saveProduct = container.get(SaveProduct);
 
   await saveProduct.execute({
-    id: "150e8400-e29b-41d4-a716-446655440000",
-    name: "Fideos Ina Guatemala",
+    id: uuid(),
+    name: "Lapiz de color azul marca Bic",
     unitOfMeasure: "UNIT",
     presentations: []
   });
