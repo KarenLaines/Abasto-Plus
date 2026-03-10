@@ -3,6 +3,7 @@ import { SaveProduct } from "../application/use-cases/save-product";
 import { MongoProductRepository } from "./mongo-product-repository";
 import { ProductRepository } from "../domain/product-repository";
 import { MongoConnection } from "./mongo-connection";
+import { GoogleTranslator } from "./google-translator";
 
 const container = new Container();
 
@@ -15,5 +16,6 @@ const connection = new MongoConnection(
     .toDynamicValue(() => new MongoProductRepository(connection));
 
 container.bind(SaveProduct).toSelf();
+container.bind("TranslatorService").to(GoogleTranslator);
 
 export { container };
