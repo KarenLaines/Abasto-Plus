@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { Product } from "../../domain/product";
 import { ProductRepository } from "../../domain/product-repository";
 import { TranslatorService } from "../ports/translator-service";
+import { EventBus } from "../../../../sharecl/event-bus";
 
 @injectable()
 export class SaveProduct {
@@ -11,7 +12,10 @@ export class SaveProduct {
         private repository: ProductRepository,
 
         @inject("TranslatorService")
-        private translator: TranslatorService
+        private translator: TranslatorService,
+
+        @inject(EventBus)
+        private eventBus:EventBus
     ) {}
 
     async execute(data: {
@@ -31,5 +35,6 @@ export class SaveProduct {
         );
 
         await this.repository.save(product);
+        this.eventBus.publish("product_created", product);
     }
 }

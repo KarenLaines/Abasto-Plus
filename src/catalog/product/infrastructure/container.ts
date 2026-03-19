@@ -4,6 +4,7 @@ import { MongoProductRepository } from "./mongo-product-repository";
 import { ProductRepository } from "../domain/product-repository";
 import { MongoConnection } from "./mongo-connection";
 import { GoogleTranslator } from "./google-translator";
+import { EventBus } from "../../../sharecl/event-bus";
 
 const container = new Container();
 
@@ -19,3 +20,4 @@ container.bind(SaveProduct).toSelf();
 container.bind("TranslatorService").to(GoogleTranslator);
 
 export { container };
+container.bind(EventBus).toConstantValue(new EventBus());
