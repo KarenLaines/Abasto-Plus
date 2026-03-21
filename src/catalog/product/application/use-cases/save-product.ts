@@ -35,6 +35,6 @@ export class SaveProduct {
         );
 
         await this.repository.save(product);
-        this.eventBus.publish("product_created", product);
+        this.eventBus.publish("product_created", product.toPrimitives());
     }
 }
