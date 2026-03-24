@@ -2,7 +2,7 @@ import { injectable, inject } from "inversify";
 import { Product } from "../../domain/product";
 import { ProductRepository } from "../../domain/product-repository";
 import { TranslatorService } from "../ports/translator-service";
-import { EventBus } from "../../../../sharecl/event-bus";
+import { EventBus } from "../../../../share/event-bus";
 
 @injectable()
 export class SaveProduct {

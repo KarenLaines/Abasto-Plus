@@ -4,7 +4,7 @@ import { MongoProductRepository } from "./mongo-product-repository";
 import { ProductRepository } from "../domain/product-repository";
 import { MongoConnection } from "./mongo-connection";
 import { GoogleTranslator } from "./google-translator";
-import { EventBus } from "../../../sharecl/event-bus";
+import { EventBus } from "../../../share/event-bus";
 
 const container = new Container();
 

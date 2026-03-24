@@ -1,4 +1,4 @@
-import { StringValueObject } from "../../../../sharecl/domain/value-objects/string-value-object";
+import { StringValueObject } from "../../../../share/domain/value-objects/string-value-object";
 
 export class ProductName extends StringValueObject {
 

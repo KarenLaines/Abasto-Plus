@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { container } from "./catalog/product/infrastructure/container";
 import { SaveProduct } from "./catalog/product/application/use-cases/save-product";
-import { EventBus } from "./sharecl/event-bus";
-import "./sharecl/handlers";
+import { EventBus } from "./share/event-bus";
+import "./share/handlers";
 
 import { v4 as uuid } from "uuid";
 
@@ -19,7 +19,7 @@ async function main() {
     unitOfMeasure: "UNIT",
     presentations: [
        {
-        id: '111e8400-e29b-41d4-a716-446655440000',
+        id: uuid(),
         name: 'Botella 1L',
         type: 'BOTTLE',
         netQuantity: 1,
@@ -31,11 +31,11 @@ async function main() {
 
   await saveProduct.execute({
     id: uuid(),
-    name: "Lapiz",
+    name: "Coca-Cola Retornable",
     unitOfMeasure: "UNIT",
     presentations: [
        {
-        id: '111e8400-e29b-41d4-a716-446655440000',
+        id: uuid(),
         name: 'Botella 1L',
         type: 'BOTTLE',
         netQuantity: 1,
@@ -51,7 +51,7 @@ async function main() {
     unitOfMeasure: "UNIT",
     presentations: [
        {
-        id: '111e8400-e29b-41d4-a716-446655440000',
+        id: uuid(),
         name: 'Botella 1L',
         type: 'BOTTLE',
         netQuantity: 1,

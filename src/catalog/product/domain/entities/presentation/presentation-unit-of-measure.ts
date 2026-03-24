@@ -1,4 +1,4 @@
-import { EnumValueObject } from "../../../../../sharecl/domain/value-objects/enum-value-object";
+import { EnumValueObject } from "../../../../../share/domain/value-objects/enum-value-object";
 
 export class PresentationUnitOfMeasure extends EnumValueObject {
 
