@@ -7,7 +7,6 @@ export class Order {
     public readonly items: any[]
   ) {}
 
-  // 👇 Este es el "create" del que habla el docente
   static create(customerId: string): Order {
     return new Order(customerId, OrderStatus.Draft, []);
   }
