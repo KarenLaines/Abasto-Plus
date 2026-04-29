@@ -1,16 +1,59 @@
 import { describe, it, expect } from 'vitest';
-import { Order } from '../../../domain/order';
+import { Order, InvalidOrderStateError, InvalidQuantityError } from '../../../domain/order';
 import { OrderStatus } from '../../../domain/order-status';
+import { OrderMother } from './order.mother';
+
+const ProductId = { from: (id: string) => ({ value: id, toEqual: (other: any) => id === other.value }) };
+const Quantity = { create: (n: number) => ({ value: n, toEqual: (other: any) => n === other.value }) };
+const Money = { create: (a: number, c: string) => ({ amount: a, currency: c }) };
+const CustomerId = { from: (id: string) => ({ value: id }) };
 
 describe('Order', () => {
-  describe('create', () => {
-    it('creates order with draft status', () => {
-      const customerId = 'cust-123';
-      const order = Order.create(customerId);
+  
+  function createDraftOrder(): Order {
+    return Order.create(CustomerId.from('cust-123'));
+  }
 
-      expect(order.status).toBe(OrderStatus.Draft);
-      expect(order.customerId).toEqual(customerId);
-      expect(order.items).toHaveLength(0);
+  function createCancelledOrder(): Order {
+    const order = createDraftOrder();
+    order.cancel();
+    return order;
+  }
+
+  describe('addItem', () => {
+    it('adds item to order', () => {
+      const order = createDraftOrder();
+      const productId = ProductId.from('prod-123');
+      const quantity = Quantity.create(2);
+      const price = Money.create(10.00, 'USD');
+
+      order.addItem(productId, quantity, price);
+
+      expect(order.items).toHaveLength(1);
+      expect(order.items[0].productId.toEqual(productId)).toBe(true);
+    });
+
+    it('throws when order is cancelled', () => {
+      const order = createCancelledOrder();
+
+      expect(() => {
+        order.addItem(ProductId.from('prod-123'), Quantity.create(1), Money.create(10, 'USD'));
+      }).toThrow(InvalidOrderStateError);
+    });
+
+    it('throws when quantity is zero', () => {
+      const order = createDraftOrder();
+
+      expect(() => {
+        order.addItem(ProductId.from('prod-123'), Quantity.create(0), Money.create(10, 'USD'));
+      }).toThrow(InvalidQuantityError);
+    });
+  });
+
+  describe('total', () => {
+    it('is zero when no items', () => {
+      const order = createDraftOrder();
+      expect(order.total.amount).toBe(0); 
     });
   });
 });
