@@ -9,7 +9,7 @@ export class InvalidQuantityError extends Error {
 
 export class Order {
   private constructor(
-    public readonly customerId: any, // CustomerId Value Object
+    public readonly customerId: any,
     public status: OrderStatus,
     public items: any[] = []
   ) {}
@@ -27,10 +27,12 @@ export class Order {
       throw new InvalidQuantityError();
     }
 
-    const existingItem = this.items.find(item => item.productId.toEqual(productId));
-    
+    const existingItem = this.items.find(
+      item => item.productId.value === productId.value
+    );
+
     if (existingItem) {
-      existingItem.quantity = existingItem.quantity.add(quantity);
+      existingItem.quantity = { value: existingItem.quantity.value + quantity.value };
     } else {
       this.items.push({ productId, quantity, price });
     }
@@ -40,7 +42,11 @@ export class Order {
     this.status = OrderStatus.Cancelled;
   }
 
+  confirm(): void {
+    this.status = OrderStatus.Confirmed;
+  }
+
   get total() {
-    return { amount: 0 }; 
+    return { amount: 0 };
   }
 }

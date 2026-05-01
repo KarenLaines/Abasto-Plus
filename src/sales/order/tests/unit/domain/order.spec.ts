@@ -9,7 +9,7 @@ const Money = { create: (a: number, c: string) => ({ amount: a, currency: c }) }
 const CustomerId = { from: (id: string) => ({ value: id }) };
 
 describe('Order', () => {
-  
+
   function createDraftOrder(): Order {
     return Order.create(CustomerId.from('cust-123'));
   }
@@ -33,6 +33,18 @@ describe('Order', () => {
       expect(order.items[0].productId.toEqual(productId)).toBe(true);
     });
 
+    it('increases quantity for existing product', () => {
+      const order = createDraftOrder();
+      const productId = ProductId.from('prod-123');
+      const price = Money.create(10.00, 'USD');
+
+      order.addItem(productId, Quantity.create(2), price);
+      order.addItem(productId, Quantity.create(3), price);
+
+      expect(order.items).toHaveLength(1);
+      expect(order.items[0].quantity.value).toBe(5);
+    });
+
     it('throws when order is cancelled', () => {
       const order = createCancelledOrder();
 
@@ -53,7 +65,16 @@ describe('Order', () => {
   describe('total', () => {
     it('is zero when no items', () => {
       const order = createDraftOrder();
-      expect(order.total.amount).toBe(0); 
+      expect(order.total.amount).toBe(0);
     });
   });
+
+  describe('confirm', () => {
+    it('changes status to confirmed', () => {
+      const order = createDraftOrder();
+      order.confirm();
+      expect(order.status).toBe(OrderStatus.Confirmed);
+    });
+  });
+
 });
