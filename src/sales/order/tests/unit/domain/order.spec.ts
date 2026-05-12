@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Order, InvalidOrderStateError, InvalidQuantityError } from '../../../domain/order';
 import { OrderStatus } from '../../../domain/order-status';
-import { OrderMother } from './order.mother';
 
 const ProductId = { from: (id: string) => ({ value: id, toEqual: (other: any) => id === other.value }) };
 const Quantity = { create: (n: number) => ({ value: n, toEqual: (other: any) => n === other.value }) };
@@ -11,7 +10,7 @@ const CustomerId = { from: (id: string) => ({ value: id }) };
 describe('Order', () => {
 
   function createDraftOrder(): Order {
-    return Order.create(CustomerId.from('cust-123'));
+    return Order.create(CustomerId.from('cust-123'), 'order-999');
   }
 
   function createCancelledOrder(): Order {

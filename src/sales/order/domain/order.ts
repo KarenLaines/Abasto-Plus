@@ -9,13 +9,14 @@ export class InvalidQuantityError extends Error {
 
 export class Order {
   private constructor(
+    public readonly id: string,
     public readonly customerId: any,
     public status: OrderStatus,
     public items: any[] = []
   ) {}
 
-  static create(customerId: any): Order {
-    return new Order(customerId, OrderStatus.Draft);
+  static create(customerId: any, id: string): Order {
+    return new Order(id, customerId, OrderStatus.Draft);
   }
 
   addItem(productId: any, quantity: any, price: any): void {

@@ -2,7 +2,7 @@ import { Order } from '../../../domain/order';
 
 export class OrderMother {
   static create(): Order {
-    return Order.create({ value: 'cust-123' });
+    return Order.create({ value: 'cust-123' }, 'order-123');
   }
 
   static draft(): Order {

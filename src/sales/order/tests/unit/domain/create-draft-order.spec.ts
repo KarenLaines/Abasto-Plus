@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { OrderMother }      from './order.mother';
+import { OrderMother } from './order.mother';
 import { CreateDraftOrder } from '../../../domain/create-draft-order';
 import { OrderStatus }      from '../../../domain/order-status';
 

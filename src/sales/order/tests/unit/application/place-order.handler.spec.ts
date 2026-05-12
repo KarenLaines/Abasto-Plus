@@ -1,40 +1,36 @@
-import { describe, it, expect, vi } from 'vitest';
-import { PlaceOrderHandler, OrderRepository } from '../../../application/place-order.handler';
-import { PlaceOrderCommand }                  from '../../../application/place-order.command';
-
-const mockRepository: OrderRepository = {
-save:   vi.fn().mockResolvedValue(undefined),
-nextId: vi.fn().mockResolvedValue('order-123'),
-};
+import { describe, it, expect } from 'vitest';
+import { PlaceOrderHandler } from '../../../application/place-order.handler';
+import { InMemoryOrderRepository } from '../infrastructure/order-in-memory-repository';
+import { PlaceOrderCommand } from '../../../application/place-order.command';
 
 describe('PlaceOrderHandler', () => {
+  const repository = new InMemoryOrderRepository();
+  const handler = new PlaceOrderHandler(repository);
 
-it('creates order with items and saves', async () => {
-    const handler = new PlaceOrderHandler(mockRepository);
-
+  it('creates order with items and saves', async () => {
     const command = new PlaceOrderCommand('cust-123', [
-    { productId: 'prod-1', quantity: 2 },
-    { productId: 'prod-2', quantity: 1 },
+      { productId: 'prod-1', quantity: 2 },
+      { productId: 'prod-2', quantity: 1 },
     ]);
 
     const orderId = await handler.handle(command);
 
     expect(orderId).toBeDefined();
-    expect(mockRepository.save).toHaveBeenCalled();
-});
 
-it('saves an order with the correct number of items', async () => {
-    const handler = new PlaceOrderHandler(mockRepository);
+    const savedOrder = await repository.findById(orderId);
+    expect(savedOrder).not.toBeNull();
+  });
 
-    const command = new PlaceOrderCommand('cust-123', [
-    { productId: 'prod-1', quantity: 2 },
-    { productId: 'prod-2', quantity: 1 },
+  it('saves an order with the correct number of items', async () => {
+    const command = new PlaceOrderCommand('cust-456', [
+      { productId: 'prod-1', quantity: 2 },
+      { productId: 'prod-2', quantity: 1 },
     ]);
 
-    await handler.handle(command);
+    const orderId = await handler.handle(command);
 
-    const savedOrder = (mockRepository.save as any).mock.calls[0][0];
-    expect(savedOrder.items).toHaveLength(2);
-});
-
+    const savedOrder = await repository.findById(orderId);
+    
+    expect(savedOrder?.items).toHaveLength(2);
+  });
 });
